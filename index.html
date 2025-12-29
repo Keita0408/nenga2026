@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 年賀状</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ▼ 最初の名前入力画面 ▼ -->
+<div id="name-screen">
+    <h2>名前を入力してね</h2>
+    <input type="text" id="name-input" placeholder="名前">
+    <button id="name-btn">決定</button>
+
+    <p class="privacy-note">※入力された名前は保存されません。個人情報は取得していません。</p>
+
+</div>
+
+<!-- ▼ 年賀状画面（最初は非表示） ▼ -->
+<div id="nenga-screen" style="display: none;">
+    <header>
+        <h1 id="title-message"></h1>
+    </header>
+
+    <main>
+        <div class="card">
+            <img src="images/nenga.png" class="nenga-img">
+            <p id="name-message" class="message"></p>
+        </div>
+
+        <div class="omikuji">
+            <button id="omikuji-btn">おみくじを引く</button>
+            <p id="omikuji-result"></p>
+        </div>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
