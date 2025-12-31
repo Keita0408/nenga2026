@@ -1,5 +1,6 @@
 document.querySelectorAll('.part').forEach(part => {
     part.addEventListener('mousedown', startDrag);
+    part.addEventListener('touchstart', startDragTouch);
 });
 
 function startDrag(e) {
@@ -19,4 +20,26 @@ function startDrag(e) {
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+}
+
+function startDragTouch(e) {
+    const part = e.target;
+    const touch = e.touches[0];
+
+    let offsetX = touch.clientX - part.offsetLeft;
+    let offsetY = touch.clientY - part.offsetTop;
+
+    function onTouchMove(e) {
+        const touch = e.touches[0];
+        part.style.left = (touch.clientX - offsetX) + 'px';
+        part.style.top = (touch.clientY - offsetY) + 'px';
+    }
+
+    function onTouchEnd() {
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', onTouchEnd);
+    }
+
+    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchend', onTouchEnd);
 }
