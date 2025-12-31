@@ -1,9 +1,14 @@
-document.querySelectorAll('.part').forEach(part => {
-    part.addEventListener('mousedown', startDrag);
-    part.addEventListener('touchstart', startDragTouch);
+const parts = document.querySelectorAll('.part');
+
+parts.forEach(part => {
+    // マウス用
+    part.addEventListener('mousedown', startMouseDrag);
+
+    // タッチ用
+    part.addEventListener('touchstart', startTouchDrag, { passive: false });
 });
 
-function startDrag(e) {
+function startMouseDrag(e) {
     const part = e.target;
     let offsetX = e.clientX - part.offsetLeft;
     let offsetY = e.clientY - part.offsetTop;
@@ -22,8 +27,8 @@ function startDrag(e) {
     document.addEventListener('mouseup', onMouseUp);
 }
 
-function startDragTouch(e) {
-    e.preventDefault();
+function startTouchDrag(e) {
+    e.preventDefault(); // スクロール防止
 
     const part = e.target;
     const touch = e.touches[0];
@@ -43,6 +48,6 @@ function startDragTouch(e) {
         document.removeEventListener('touchend', onTouchEnd);
     }
 
-    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
     document.addEventListener('touchend', onTouchEnd);
 }
