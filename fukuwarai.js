@@ -23,6 +23,8 @@ function startDrag(e) {
 }
 
 function startDragTouch(e) {
+    e.preventDefault();
+
     const part = e.target;
     const touch = e.touches[0];
 
@@ -30,6 +32,7 @@ function startDragTouch(e) {
     let offsetY = touch.clientY - part.offsetTop;
 
     function onTouchMove(e) {
+        e.preventDefault();
         const touch = e.touches[0];
         part.style.left = (touch.clientX - offsetX) + 'px';
         part.style.top = (touch.clientY - offsetY) + 'px';
