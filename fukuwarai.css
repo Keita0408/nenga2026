@@ -1,0 +1,15 @@
+#game-area {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.base {
+    width: 100%;
+}
+
+.part {
+    position: absolute;
+    width: 80px;
+    cursor: grab;
+}
