@@ -1,8 +1,11 @@
 let selectedPart = null;
 const gameArea = document.getElementById('game-area');
+const parts = document.querySelectorAll('.part');
+let placedCount = 0;
+const totalParts = parts.length;
 
-// パーツをタップして選択
-document.querySelectorAll('.part').forEach(part => {
+// パーツ選択
+parts.forEach(part => {
     part.addEventListener('click', (e) => {
         e.stopPropagation();
         selectedPart = part;
@@ -14,8 +17,8 @@ document.querySelectorAll('.part').forEach(part => {
     }, { passive: false });
 });
 
-// ゲームエリアをタップしたら移動
-function movePart(x, y) {
+// パーツを置く
+function placePart(x, y) {
     if (!selectedPart) return;
 
     const rect = gameArea.getBoundingClientRect();
@@ -26,16 +29,53 @@ function movePart(x, y) {
     selectedPart.style.left = posX + 'px';
     selectedPart.style.top = posY + 'px';
 
+    // ゆっくり消える（透明＋当たり判定オフ）
+    selectedPart.style.opacity = 0;
+    selectedPart.style.pointerEvents = "none";
+
+    placedCount++;
+
+    if (placedCount === totalParts) {
+        revealAll();
+    }
+
     selectedPart = null;
 }
 
-// PC用クリック
+// PC
 gameArea.addEventListener('click', (e) => {
-    movePart(e.clientX, e.clientY);
+    placePart(e.clientX, e.clientY);
 });
 
-// スマホ用タップ
+// スマホ
 gameArea.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
-    movePart(touch.clientX, touch.clientY);
+    const t = e.touches[0];
+    placePart(t.clientX, t.clientY);
 }, { passive: false });
+
+// 全部見える
+function revealAll() {
+    parts.forEach(p => {
+        p.style.opacity = 1;
+        p.style.pointerEvents = "auto";
+    });
+}
+
+// リセット
+function resetGame() {
+    placedCount = 0;
+
+    parts.forEach(p => {
+        p.style.opacity = 1;
+        p.style.pointerEvents = "auto";
+        p.style.left = p.dataset.x + "px";
+        p.style.top = p.dataset.y + "px";
+    });
+}
+
+window.addEventListener("load", () => {
+    parts.forEach(p => {
+        p.style.left = p.dataset.x + "px";
+        p.style.top = p.dataset.y + "px";
+    });
+});

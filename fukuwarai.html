@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="fukuwarai.css">
 </head>
 <body>
-    <h1>福笑いゲーム</h1>
 
     <div id="game-area">
         <img id="face" src="images/face.png" class="base">
 
-        <img id="eye-left" src="images/eye-left.png" class="part">
-        <img id="eye-right" src="images/eye-right.png" class="part">
-
-        <img id="nose" src="images/nose.png" class="part">
-        <img id="mouth" src="images/mouth.png" class="part">
+        <!-- 顔の下に並べる初期位置 -->
+        <img id="eye-left"  src="images/eye-left.png"  class="part" data-x="40"  data-y="550">
+        <img id="eye-right" src="images/eye-right.png" class="part" data-x="140" data-y="550">
+        <img id="nose"      src="images/nose.png"     class="part" data-x="240" data-y="550">
+        <img id="mouth"     src="images/mouth.png"    class="part" data-x="340" data-y="550">
     </div>
+
+    <button onclick="resetGame()">リセット</button>
 
     <script src="fukuwarai.js"></script>
 </body>

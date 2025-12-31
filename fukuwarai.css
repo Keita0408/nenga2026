@@ -1,15 +1,27 @@
 #game-area {
     position: relative;
     width: 400px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .base {
+    position: absolute;
     width: 100%;
+    left: 0;
+    top: 0;
 }
 
 .part {
     position: absolute;
     width: 80px;
-    cursor: grab;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.part {
+    position: absolute;
+    width: 80px;
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 0.5s ease; /* ← これでゆっくり消える */
 }
