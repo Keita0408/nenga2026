@@ -10,48 +10,42 @@ parts.forEach(part => {
         e.stopPropagation();
         selectedPart = part;
     });
-
-    part.addEventListener('touchstart', (e) => {
-        e.stopPropagation();
-        selectedPart = part;
-    }, { passive: false });
 });
 
 // パーツを置く
-function placePart(x, y) {
+function placePart(localX, localY) {
     if (!selectedPart) return;
 
-    const rect = gameArea.getBoundingClientRect();
+    selectedPart.style.position = "absolute";
 
-    const posX = x - rect.left - selectedPart.offsetWidth / 2;
-    const posY = y - rect.top - selectedPart.offsetHeight / 2;
+    const w = selectedPart.getBoundingClientRect().width;
+    const h = selectedPart.getBoundingClientRect().height;
 
-    selectedPart.style.left = posX + 'px';
-    selectedPart.style.top = posY + 'px';
+    selectedPart.style.left = (localX - w / 2) + "px";
+    selectedPart.style.top  = (localY - h / 2) + "px";
 
-    // ゆっくり消える（透明＋当たり判定オフ）
     selectedPart.style.opacity = 0;
     selectedPart.style.pointerEvents = "none";
 
     placedCount++;
-
-    if (placedCount === totalParts) {
-        revealAll();
-    }
+    if (placedCount === totalParts) revealAll();
 
     selectedPart = null;
 }
 
-// PC
-gameArea.addEventListener('click', (e) => {
-    placePart(e.clientX, e.clientY);
+
+
+
+// クリックで置く
+document.getElementById("hit-area").addEventListener("click", (e) => {
+    const rect = e.currentTarget.getBoundingClientRect(); // ← hit-area の rect を使う
+    const x = e.clientX;
+    const y = e.clientY;
+    placePart(x, y);
 });
 
-// スマホ
-gameArea.addEventListener('touchstart', (e) => {
-    const t = e.touches[0];
-    placePart(t.clientX, t.clientY);
-}, { passive: false });
+
+
 
 // 全部見える
 function revealAll() {
@@ -68,14 +62,18 @@ function resetGame() {
     parts.forEach(p => {
         p.style.opacity = 1;
         p.style.pointerEvents = "auto";
-        p.style.left = p.dataset.x + "px";
-        p.style.top = p.dataset.y + "px";
+        p.style.position = "relative"; // ← 置き場に戻す
+        p.style.left = "";
+        p.style.top = "";
     });
 }
 
 window.addEventListener("load", () => {
     parts.forEach(p => {
-        p.style.left = p.dataset.x + "px";
-        p.style.top = p.dataset.y + "px";
+        p.style.position = "relative";  // ← これが決定打
+        p.style.left = "";
+        p.style.top = "";
+        p.style.opacity = 1;
+        p.style.pointerEvents = "auto";
     });
 });
