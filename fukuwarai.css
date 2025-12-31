@@ -45,3 +45,23 @@
     z-index: 5;   /* パーツは前 */
 }
 
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 14px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #d9534f;
+    transition: transform 0.1s ease;
+}
+
+button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #d9534f;
+}
